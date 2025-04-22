@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    networks:
+      - mobile_gaming_network
+    volumes:
+      - ./backend/data:/app/data  # ensures SQLite DB is stored locally and shared
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8501:8501"
+    networks:
+      - mobile_gaming_network
+    depends_on:
+      - backend
+
+networks:
+  mobile_gaming_network:
+    driver: bridge
